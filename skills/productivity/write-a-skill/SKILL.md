@@ -1,117 +1,159 @@
 ---
 name: write-a-skill
-description: 创建具有适当结构、渐进式披露和捆绑资源的新代理技能。当用户想要创建、编写或构建新技能时使用。
+description: 创建具有正确结构、渐进式披露和捆绑资源的新 agent 技能。当用户想要创建、编写或构建新技能时使用。 (Create new agent skills with proper structure, progressive disclosure, and bundled resources. Use when user wants to create, write, or build a new skill.)
 ---
 
-# 编写技能
+# 编写技能 (Writing Skills)
 
-## 流程
+## 流程 (Process)
 
 1. **收集需求** - 向用户询问：
+   > **Gather requirements** - ask user about:
    - 该技能涵盖什么任务/领域？
-   - 应该处理哪些具体用例？
-   - 需要可执行脚本还是仅需说明？
-   - 是否需要包含任何参考资料？
+     > What task/domain does the skill cover?
+   - 它应该处理哪些具体用例？
+     > What specific use cases should it handle?
+   - 它需要可执行脚本还是只需要说明？
+     > Does it need executable scripts or just instructions?
+   - 有要包含的参考材料吗？
+     > Any reference materials to include?
 
 2. **起草技能** - 创建：
-   - SKILL.md，包含简洁的说明
-   - 如果内容超过 500 行，则添加额外的参考文件
-   - 如果需要确定性操作，则添加实用脚本
+   > **Draft the skill** - create:
+   - 包含简洁说明的 SKILL.md
+     > SKILL.md with concise instructions
+   - 如果内容超过500行，添加额外的参考文件
+     > Additional reference files if content exceeds 500 lines
+   - 如果需要确定性操作，添加实用脚本
+     > Utility scripts if deterministic operations needed
 
 3. **与用户一起审查** - 展示草稿并询问：
-   - 是否涵盖了你的用例？
-   - 是否有遗漏或不清楚的地方？
-   - 是否需要增加/减少某个部分的详细程度？
+   > **Review with user** - present draft and ask:
+   - 这涵盖了你的用例吗？
+     > Does this cover your use cases?
+   - 有什么遗漏或不清楚的吗？
+     > Anything missing or unclear?
+   - 某个部分应该更详细/更简洁吗？
+     > Should any section be more/less detailed?
 
-## 技能结构
+## 技能结构 (Skill Structure)
 
 ```
 skill-name/
 ├── SKILL.md           # 主要说明（必需）
-├── REFERENCE.md       # 详细文档（如需要）
-├── EXAMPLES.md        # 使用示例（如需要）
-└── scripts/           # 实用脚本（如需要）
+├── REFERENCE.md       # 详细文档（如果需要）
+├── EXAMPLES.md        # 使用示例（如果需要）
+└── scripts/           # 实用脚本（如果需要）
     └── helper.js
 ```
 
-## SKILL.md 模板
+## SKILL.md 模板 (Template)
 
 ```md
 ---
 name: skill-name
-description: 能力的简要描述。当 [特定触发条件] 时使用。
+description: Brief description of capability. Use when [specific triggers].
 ---
 
-# 技能名称
+# Skill Name
 
-## 快速开始
+## Quick start
 
-[最小工作示例]
+[Minimal working example]
 
-## 工作流
+## Workflows
 
-[复杂任务的分步流程和检查清单]
+[Step-by-step processes with checklists for complex tasks]
 
-## 高级功能
+## Advanced features
 
-[链接到单独文件：参见 [REFERENCE.md](REFERENCE.md)]
+[Link to separate files: See [REFERENCE.md](REFERENCE.md)]
 ```
 
-## 描述要求
+## 描述要求 (Description Requirements)
 
-描述是你的代理在决定加载哪个技能时**唯一看到的内容**。它会在系统提示中与所有其他已安装的技能一起显示。你的代理会读取这些描述，并根据用户的请求选择相关的技能。
+描述是**你的 agent 在决定加载哪个技能时看到的唯一内容**。它在系统提示中与所有其他已安装的技能一起显示。你的 agent 读取这些描述并根据用户的请求选择相关技能。
 
-**目标**：给你的代理足够的信息来了解：
+> The description is **the only thing your agent sees** when deciding which skill to load. It's surfaced in the system prompt alongside all other installed skills. Your agent reads these descriptions and picks the relevant skill based on the user's request.
 
-1. 该技能提供什么功能
-2. 何时/为何触发它（特定关键词、上下文、文件类型）
+**目标**：给你的 agent 足够的信息来知道：
+> **Goal**: Give your agent just enough info to know:
+
+1. 该技能提供什么能力
+   > What capability this skill provides
+2. 何时/为什么触发它（特定关键词、上下文、文件类型）
+   > When/why to trigger it (specific keywords, contexts, file types)
 
 **格式**：
+> **Format**:
 
-- 最多 1024 个字符
-- 使用第三人称
+- 最多1024个字符
+  > Max 1024 chars
+- 用第三人称书写
+  > Write in third person
 - 第一句话：它做什么
-- 第二句话："当 [特定触发条件] 时使用"
+  > First sentence: what it does
+- 第二句话："Use when [specific triggers]"
+  > Second sentence: "Use when [specific triggers]"
 
 **好的示例**：
+> **Good example**:
 
 ```
-从 PDF 文件中提取文本和表格、填写表单、合并文档。当处理 PDF 文件或用户提及 PDF、表单或文档提取时使用。
+Extract text and tables from PDF files, fill forms, merge documents. Use when working with PDF files or when user mentions PDFs, forms, or document extraction.
 ```
 
 **不好的示例**：
+> **Bad example**:
 
 ```
-帮助处理文档。
+Helps with documents.
 ```
 
-不好的示例无法让你的代理将其与其他文档技能区分开来。
+不好的示例让你的 agent 无法将其与其他文档技能区分开来。
+> The bad example gives your agent no way to distinguish this from other document skills.
 
-## 何时添加脚本
+## 何时添加脚本 (When to Add Scripts)
 
 在以下情况下添加实用脚本：
+> Add utility scripts when:
 
 - 操作是确定性的（验证、格式化）
+  > Operation is deterministic (validation, formatting)
 - 同样的代码会被重复生成
+  > Same code would be generated repeatedly
 - 错误需要显式处理
+  > Errors need explicit handling
 
-与生成的代码相比，脚本可以节省 token 并提高可靠性。
+脚本比生成的代码更节省 token 并提高可靠性。
+> Scripts save tokens and improve reliability vs generated code.
 
-## 何时拆分文件
+## 何时拆分文件 (When to Split Files)
 
 在以下情况下拆分为单独的文件：
+> Split into separate files when:
 
-- SKILL.md 超过 100 行
-- 内容有不同的领域（如财务与销售模式）
-- 高级功能很少需要
+- SKILL.md 超过100行
+  > SKILL.md exceeds 100 lines
+- 内容有明显的领域划分（如财务 vs 销售模式）
+  > Content has distinct domains (finance vs sales schemas)
+- 高级功能很少被需要
+  > Advanced features are rarely needed
 
-## 审查检查清单
+## 审查清单 (Review Checklist)
 
 起草后，请验证：
+> After drafting, verify:
 
-- [ ] 描述包含触发条件（"当...时使用"）
-- [ ] SKILL.md 不超过 100 行
-- [ ] 没有时间敏感信息
+- [ ] 描述包含触发条件（"Use when..."）
+  > Description includes triggers ("Use when...")
+- [ ] SKILL.md 保持在100行以内
+  > SKILL.md under 100 lines
+- [ ] 没有时效性信息
+  > No time-sensitive info
 - [ ] 术语一致
+  > Consistent terminology
 - [ ] 包含具体示例
+  > Concrete examples included
 - [ ] 引用深度为一级
+  > References one level deep
