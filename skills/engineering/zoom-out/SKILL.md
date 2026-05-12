@@ -1,7 +1,7 @@
 ---
 name: zoom-out
-description: Tell the agent to zoom out and give broader context or a higher-level perspective. Use when you're unfamiliar with a section of code or need to understand how it fits into the bigger picture.
+description: 告诉代理拉远视角，给出更广泛的上下文或更高层次的视角。当你不熟悉某段代码或需要理解它如何融入更大的图景时使用。
 disable-model-invocation: true
 ---
 
-I don't know this area of code well. Go up a layer of abstraction. Give me a map of all the relevant modules and callers, using the project's domain glossary vocabulary.
+我不太了解这个代码区域。上移一层抽象。给我一个所有相关模块和调用者的地图，使用项目的领域词汇表词汇。

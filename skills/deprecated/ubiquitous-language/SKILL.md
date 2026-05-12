@@ -1,93 +1,93 @@
 ---
 name: ubiquitous-language
-description: Extract a DDD-style ubiquitous language glossary from the current conversation, flagging ambiguities and proposing canonical terms. Saves to UBIQUITOUS_LANGUAGE.md. Use when user wants to define domain terms, build a glossary, harden terminology, create a ubiquitous language, or mentions "domain model" or "DDD".
+description: 从当前对话中提取 DDD 风格的统一语言词汇表，标记歧义并提出规范术语。保存到 UBIQUITOUS_LANGUAGE.md。当用户想要定义领域术语、构建词汇表、固化术语、创建统一语言或提到"domain model"或"DDD"时使用。
 disable-model-invocation: true
 ---
 
-# Ubiquitous Language
+# 统一语言
 
-Extract and formalize domain terminology from the current conversation into a consistent glossary, saved to a local file.
+从当前对话中提取和形式化领域术语为一致的词汇表，保存到本地文件。
 
-## Process
+## 流程
 
-1. **Scan the conversation** for domain-relevant nouns, verbs, and concepts
-2. **Identify problems**:
-   - Same word used for different concepts (ambiguity)
-   - Different words used for the same concept (synonyms)
-   - Vague or overloaded terms
-3. **Propose a canonical glossary** with opinionated term choices
-4. **Write to `UBIQUITOUS_LANGUAGE.md`** in the working directory using the format below
-5. **Output a summary** inline in the conversation
+1. **扫描对话**中的领域相关名词、动词和概念
+2. **识别问题**：
+   - 同一个词用于不同概念（歧义）
+   - 不同的词用于同一概念（同义词）
+   - 模糊或过载的术语
+3. **提出规范词汇表**，带有明确的术语选择
+4. **写入工作目录中的 `UBIQUITOUS_LANGUAGE.md`**，使用以下格式
+5. **在对话中输出摘要**
 
-## Output Format
+## 输出格式
 
-Write a `UBIQUITOUS_LANGUAGE.md` file with this structure:
+写入一个 `UBIQUITOUS_LANGUAGE.md` 文件，结构如下：
 
 ```md
-# Ubiquitous Language
+# 统一语言
 
-## Order lifecycle
+## 订单生命周期
 
-| Term        | Definition                                              | Aliases to avoid      |
+| 术语 | 定义 | 应避免的别名 |
 | ----------- | ------------------------------------------------------- | --------------------- |
-| **Order**   | A customer's request to purchase one or more items      | Purchase, transaction |
-| **Invoice** | A request for payment sent to a customer after delivery | Bill, payment request |
+| **订单** | 客户购买一个或多个商品的请求 | 购买、交易 |
+| **发票** | 交付后发送给客户的付款请求 | 账单、付款请求 |
 
-## People
+## 人员
 
-| Term         | Definition                                  | Aliases to avoid       |
+| 术语 | 定义 | 应避免的别名 |
 | ------------ | ------------------------------------------- | ---------------------- |
-| **Customer** | A person or organization that places orders | Client, buyer, account |
-| **User**     | An authentication identity in the system    | Login, account         |
+| **客户** | 下订单的个人或组织 | 客户端、买家、账户 |
+| **用户** | 系统中的认证身份 | 登录、账户 |
 
-## Relationships
+## 关系
 
-- An **Invoice** belongs to exactly one **Customer**
-- An **Order** produces one or more **Invoices**
+- **发票**恰好属于一个**客户**
+- **订单**产生一个或多个**发票**
 
-## Example dialogue
+## 示例对话
 
-> **Dev:** "When a **Customer** places an **Order**, do we create the **Invoice** immediately?"
-> **Domain expert:** "No — an **Invoice** is only generated once a **Fulfillment** is confirmed. A single **Order** can produce multiple **Invoices** if items ship in separate **Shipments**."
-> **Dev:** "So if a **Shipment** is cancelled before dispatch, no **Invoice** exists for it?"
-> **Domain expert:** "Exactly. The **Invoice** lifecycle is tied to the **Fulfillment**, not the **Order**."
+> **开发者：** "当**客户**下**订单**时，我们是否立即创建**发票**？"
+> **领域专家：** "不是——**发票**只有在**履约**确认后才生成。如果商品在不同的**发货**中发出，一个**订单**可以产生多个**发票**。"
+> **开发者：** "那么如果**发货**在发货前被取消，就不会有对应的**发票**？"
+> **领域专家：** "没错。**发票**的生命周期与**履约**绑定，而不是**订单**。"
 
-## Flagged ambiguities
+## 标记的歧义
 
-- "account" was used to mean both **Customer** and **User** — these are distinct concepts: a **Customer** places orders, while a **User** is an authentication identity that may or may not represent a **Customer**.
+- "account"既被用于表示**客户**也被用于表示**用户**——这是两个不同的概念：**客户**下订单，而**用户**是可能代表也可能不代表**客户**的认证身份。
 ```
 
-## Rules
+## 规则
 
-- **Be opinionated.** When multiple words exist for the same concept, pick the best one and list the others as aliases to avoid.
-- **Flag conflicts explicitly.** If a term is used ambiguously in the conversation, call it out in the "Flagged ambiguities" section with a clear recommendation.
-- **Only include terms relevant for domain experts.** Skip the names of modules or classes unless they have meaning in the domain language.
-- **Keep definitions tight.** One sentence max. Define what it IS, not what it does.
-- **Show relationships.** Use bold term names and express cardinality where obvious.
-- **Only include domain terms.** Skip generic programming concepts (array, function, endpoint) unless they have domain-specific meaning.
-- **Group terms into multiple tables** when natural clusters emerge (e.g. by subdomain, lifecycle, or actor). Each group gets its own heading and table. If all terms belong to a single cohesive domain, one table is fine — don't force groupings.
-- **Write an example dialogue.** A short conversation (3-5 exchanges) between a dev and a domain expert that demonstrates how the terms interact naturally. The dialogue should clarify boundaries between related concepts and show terms being used precisely.
+- **要有主见。** 当同一概念有多个词时，选择最好的那个，将其他列为应避免的别名。
+- **明确标记冲突。** 如果某个术语在对话中有歧义，在"标记的歧义"部分指出并给出明确建议。
+- **仅包含领域专家相关的术语。** 跳过模块或类的名称，除非它们在领域语言中有意义。
+- **保持定义简洁。** 最多一句话。定义它是什么，而不是它做什么。
+- **展示关系。** 使用粗体术语名称，在明显的地方表达基数。
+- **仅包含领域术语。** 跳过通用编程概念（数组、函数、端点），除非它们有领域特定的含义。
+- **将术语分组到多个表格中**，当出现自然聚类时（例如按子领域、生命周期或参与者分组）。每个分组有自己的标题和表格。如果所有术语属于一个内聚领域，一个表格就够了——不要强制分组。
+- **编写示例对话。** 开发者和领域专家之间的简短对话（3-5 轮），展示术语如何自然交互。对话应澄清相关概念之间的边界，并展示术语的精确使用。
 
 <example>
 
-## Example dialogue
+## 示例对话
 
-> **Dev:** "How do I test the **sync service** without Docker?"
+> **开发者：** "如何在没有 Docker 的情况下测试**同步服务**？"
 
-> **Domain expert:** "Provide the **filesystem layer** instead of the **Docker layer**. It implements the same **Sandbox service** interface but uses a local directory as the **sandbox**."
+> **领域专家：** "提供**文件系统层**而不是**Docker 层**。它实现了相同的**沙箱服务**接口，但使用本地目录作为**沙箱**。"
 
-> **Dev:** "So **sync-in** still creates a **bundle** and unpacks it?"
+> **开发者：** "那么 **sync-in** 仍然创建**包**并解压它？"
 
-> **Domain expert:** "Exactly. The **sync service** doesn't know which layer it's talking to. It calls `exec` and `copyIn` — the **filesystem layer** just runs those as local shell commands."
+> **领域专家：** "没错。**同步服务**不知道它在和哪个层通信。它调用 `exec` 和 `copyIn`——**文件系统层**只是将它们作为本地 shell 命令运行。"
 
 </example>
 
-## Re-running
+## 重新运行
 
-When invoked again in the same conversation:
+在同一对话中再次调用时：
 
-1. Read the existing `UBIQUITOUS_LANGUAGE.md`
-2. Incorporate any new terms from subsequent discussion
-3. Update definitions if understanding has evolved
-4. Re-flag any new ambiguities
-5. Rewrite the example dialogue to incorporate new terms
+1. 读取现有的 `UBIQUITOUS_LANGUAGE.md`
+2. 纳入后续讨论中的任何新术语
+3. 如果理解有变化，更新定义
+4. 重新标记任何新的歧义
+5. 重写示例对话以纳入新术语
